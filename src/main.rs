@@ -1,15 +1,16 @@
 extern crate amethyst;
 
+use amethyst::core::transform::TransformBundle;
 use amethyst::prelude::*;
-use amethyst::renderer::{
-    DisplayConfig, DrawFlat2D, Event, Pipeline, RenderBundle, Stage, VirtualKeyCode,
-};
+use amethyst::renderer::{DisplayConfig, DrawFlat2D, Pipeline, RenderBundle, Stage};
 
-pub struct Pong;
+mod pong;
 
-impl SimpleState for Pong {}
+use pong::Pong;
 
 fn main() -> amethyst::Result<()> {
+    amethyst::start_logger(Default::default());
+
     use amethyst::utils::application_root_dir;
 
     let path = format!("{}/resources/display_config.ron", application_root_dir());
@@ -23,12 +24,11 @@ fn main() -> amethyst::Result<()> {
     );
 
     let game_data = GameDataBuilder::default()
-        .with_bundle(RenderBundle::new(pipe, Some(config)).with_sprite_sheet_processor())?;
+        .with_bundle(RenderBundle::new(pipe, Some(config)).with_sprite_sheet_processor())?
+        .with_bundle(TransformBundle::new())?;
 
     let mut game = Application::new("./", Pong, game_data)?;
 
     game.run();
-
-    amethyst::start_logger(Default::default());
     Ok(())
 }
