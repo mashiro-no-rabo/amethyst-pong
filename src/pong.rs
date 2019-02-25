@@ -20,9 +20,6 @@ impl SimpleState for Pong {
 
         let sprite_sheet_handle = load_sprite_sheet(world);
 
-        // world.register::<Paddle>();
-        world.register::<Ball>(); // <- add this line temporarily
-
         initialise_ball(world, sprite_sheet_handle.clone());
         initialise_paddles(world, sprite_sheet_handle);
         initialise_camera(world);
