@@ -4,6 +4,7 @@ use amethyst::core::transform::TransformBundle;
 use amethyst::input::InputBundle;
 use amethyst::prelude::*;
 use amethyst::renderer::{DisplayConfig, DrawFlat2D, Pipeline, RenderBundle, Stage};
+use amethyst::{LogLevelFilter, LoggerConfig};
 
 mod pong;
 mod systems;
@@ -11,7 +12,9 @@ mod systems;
 use pong::Pong;
 
 fn main() -> amethyst::Result<()> {
-    amethyst::start_logger(Default::default());
+    let mut lc = LoggerConfig::default();
+    lc.level_filter = LogLevelFilter::Warn;
+    amethyst::start_logger(lc);
 
     use amethyst::utils::application_root_dir;
 
@@ -34,7 +37,13 @@ fn main() -> amethyst::Result<()> {
         .with_bundle(RenderBundle::new(pipe, Some(config)).with_sprite_sheet_processor())?
         .with_bundle(TransformBundle::new())?
         .with_bundle(input_bundle)?
-        .with(systems::PaddleSystem, "paddle_system", &["input_system"]);
+        .with(systems::PaddleSystem, "paddle_system", &["input_system"])
+        .with(systems::BallsMovementSystem, "ball_system", &[])
+        .with(
+            systems::BounceSystem,
+            "collision_system",
+            &["paddle_system", "ball_system"],
+        );
 
     let mut game = Application::new("./", Pong, game_data)?;
 
