@@ -6,3 +6,6 @@ pub use self::balls_movement::BallsMovementSystem;
 
 mod bounce;
 pub use self::bounce::BounceSystem;
+
+mod winner;
+pub use self::winner::WinnerSystem;
