@@ -57,12 +57,15 @@ pub struct Paddle {
     pub height: f32,
 }
 
+pub const PADDLE_HEIGHT: f32 = 16.0;
+const PADDLE_WIDTH: f32 = 4.0;
+
 impl Paddle {
     fn new(side: Side) -> Paddle {
         Paddle {
             side,
-            width: 1.0,
-            height: 1.0,
+            width: PADDLE_WIDTH,
+            height: PADDLE_HEIGHT,
         }
     }
 }
@@ -70,9 +73,6 @@ impl Paddle {
 impl Component for Paddle {
     type Storage = DenseVecStorage<Self>;
 }
-
-pub const PADDLE_HEIGHT: f32 = 16.0;
-const PADDLE_WIDTH: f32 = 4.0;
 
 /// Initialises one paddle on the left, and one paddle on the right.
 fn initialise_paddles(world: &mut World, sprite_sheet: SpriteSheetHandle) {
