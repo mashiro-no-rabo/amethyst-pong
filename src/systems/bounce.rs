@@ -50,10 +50,10 @@ impl<'s> System<'s> for BounceSystem {
                     paddle_y + paddle.height + ball.radius,
                 );
 
-                let ball_velocity = (paddle.side == Side::Left && ball.velocity[0] < 0.0)
+                let ball_moving_out = (paddle.side == Side::Left && ball.velocity[0] < 0.0)
                     || (paddle.side == Side::Right && ball.velocity[0] > 0.0);
 
-                if ball_collided && ball_velocity {
+                if ball_collided && ball_moving_out {
                     ball.velocity[0] = -ball.velocity[0];
                 }
             }
