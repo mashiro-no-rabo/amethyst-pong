@@ -1,5 +1,3 @@
-extern crate amethyst;
-
 use amethyst::core::transform::TransformBundle;
 use amethyst::input::InputBundle;
 use amethyst::prelude::*;
@@ -41,6 +39,7 @@ fn main() -> amethyst::Result<()> {
         .with_bundle(input_bundle)?
         .with_bundle(UiBundle::<String, String>::new())?
         .with(systems::PaddleSystem, "paddle_system", &["input_system"])
+        .with(systems::PauseSystem, "pause", &["input_system"])
         .with(systems::BallsMovementSystem, "ball_system", &[])
         .with(
             systems::BounceSystem,

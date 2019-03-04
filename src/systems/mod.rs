@@ -9,3 +9,6 @@ pub use self::bounce::BounceSystem;
 
 mod winner;
 pub use self::winner::WinnerSystem;
+
+mod pause;
+pub use self::pause::PauseSystem;

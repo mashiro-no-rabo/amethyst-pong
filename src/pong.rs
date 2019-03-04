@@ -1,5 +1,3 @@
-extern crate amethyst;
-
 use amethyst::assets::{AssetStorage, Loader};
 use amethyst::core::transform::Transform;
 use amethyst::ecs::prelude::{Component, DenseVecStorage, Entity};
