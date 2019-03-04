@@ -1,4 +1,4 @@
-use amethyst::core::Transform;
+use amethyst::core::{timing::Time, Transform};
 use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage};
 use amethyst::input::InputHandler;
 
@@ -12,9 +12,14 @@ impl<'s> System<'s> for PaddleSystem {
         WriteStorage<'s, Transform>,
         ReadStorage<'s, Paddle>,
         Read<'s, InputHandler<String, String>>,
+        Read<'s, Time>,
     );
 
-    fn run(&mut self, (mut transforms, paddles, input): Self::SystemData) {
+    fn run(&mut self, (mut transforms, paddles, input, time): Self::SystemData) {
+        if time.time_scale() <= 0.0 {
+            return;
+        }
+
         for (paddle, transform) in (&paddles, &mut transforms).join() {
             let movement = match paddle.side {
                 Side::Left => input.axis_value("left_paddle"),
